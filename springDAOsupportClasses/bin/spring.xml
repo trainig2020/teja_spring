@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+           xmlns:context="http://www.springframework.org/schema/context">
+           
+ <context:annotation-config/>   
+ <context:component-scan base-package="org"/> 
+ 
+ 
+ <bean id="dataSource"  class="org.apache.commons.dbcp.BasicDataSource" >
+ <property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver"/>
+ <property name="url" value="jdbc:derby://localhost:1527//firstdb;create=true"/>
+ </bean> 
+ 
+  
+ <bean id="simpleJdbcDaoImpl" class="org.dao.SimpleJdbcDaoImpl">
+ <property name="dataSource" ref="dataSource"/>
+ </bean>
+ 
+ <bean id="sessionFactory" class="org.springframework.org.hibernate3.annotation.AnnotationSessionFacoryBean"
+ >
+ <property name="dataSource" ref="dataSource"/>
+ <property name="packagesToScan" value="org.model"/>
+ <property name="hibernateProperties">
+ <props>
+ <prop key="dialect">org.hibernate.dialect.DerbyDialect</prop>
+ 
+ </props>
+ </property>
+ </bean>
+ 
+ 
+ 
+</beans>
